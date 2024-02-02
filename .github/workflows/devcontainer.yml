@@ -25,3 +25,7 @@ jobs:
       run: |
         cd .devcontainer
         ./test.sh
+
+    - name: Run tests
+      run: |
+         docker run --rm sigrok-dev:test /bin/bash -c 'cd sigrok-test && ./decoder/pdtest -r -v -a'
