@@ -45,7 +45,7 @@ RUN git clone https://github.com/sigrokproject/libsigrok.git && \
     make && \
     make install && \
     sudo ldconfig /usr/local/lib
-ENV PKG_CONFIG_PATH=/home/root/sr/lib/pkgconfig
+ENV PKG_CONFIG_PATH=/root/sr/lib/pkgconfig
 
 
 WORKDIR /home/vscode
@@ -70,7 +70,7 @@ WORKDIR /home/vscode
 RUN git clone https://github.com/sigrokproject/sigrok-util.git && \
     cd sigrok-util/cross-compile/linux && \
     ./sigrok-cross-linux || true
-ENV LD_LIBRARY_PATH=/home/root/sr/lib
+ENV LD_LIBRARY_PATH=/root/sr/lib
 
 
 WORKDIR /home/vscode
