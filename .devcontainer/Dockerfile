@@ -35,8 +35,8 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get autoremove -y && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /home/vscode
 
+WORKDIR /home/vscode
 # # Setup libsigrok
 RUN git clone https://github.com/sigrokproject/libsigrok.git && \
     cd libsigrok && \
@@ -45,7 +45,10 @@ RUN git clone https://github.com/sigrokproject/libsigrok.git && \
     make && \
     make install && \
     sudo ldconfig /usr/local/lib
+ENV PKG_CONFIG_PATH=$HOME/sr/lib/pkgconfig
 
+
+WORKDIR /home/vscode
 # # Setup sigrok-cli
 RUN git clone https://github.com/sigrokproject/sigrok-cli.git && \
     cd sigrok-cli && \
@@ -54,17 +57,23 @@ RUN git clone https://github.com/sigrokproject/sigrok-cli.git && \
     make && \
     make install
 
+
+WORKDIR /home/vscode
 # Setup sigrok-dumps
 RUN git clone https://github.com/sigrokproject/sigrok-dumps.git && \
     cd sigrok-dumps && \
     make install
 
+
+WORKDIR /home/vscode
+
 # # Setup sigrok-util
 RUN git clone https://github.com/sigrokproject/sigrok-util.git && \
     cd sigrok-util/cross-compile/linux && \
-    ./sigrok-cross-linux
-ENV PKG_CONFIG_PATH=$HOME/sr/lib/pkgconfig
+    ./sigrok-cross-linux || true
 
+
+WORKDIR /home/vscode
 # # Setup libsigrokdecode
 RUN git clone https://github.com/sigrokproject/libsigrokdecode.git && \
     cd libsigrokdecode && \
@@ -74,6 +83,8 @@ RUN git clone https://github.com/sigrokproject/libsigrokdecode.git && \
     make install
 ENV PATH_DECODERS=/home/vscode//libsigrokdecode/decoders/
 
+
+WORKDIR /home/vscode
 # # Setup sigrok-test
 RUN git clone https://github.com/sigrokproject/sigrok-test.git && \
     cd sigrok-test && \
