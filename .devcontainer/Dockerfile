@@ -1,8 +1,10 @@
 # Note: You can use any Debian/Ubuntu based image you want. 
 FROM mcr.microsoft.com/devcontainers/base:ubuntu-22.04
 
-RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends \
+USER vscode
+
+RUN sudo apt-get update && export DEBIAN_FRONTEND=noninteractive \
+    && sudo apt-get -y install --no-install-recommends \
     software-properties-common \
     python-is-python3 \
     python3-dev \
@@ -32,8 +34,8 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     doxygen \
     graphviz \
     # Clean up
-    && apt-get autoremove -y && apt-get clean -y \
-    && rm -rf /var/lib/apt/lists/*
+    && sudo apt-get autoremove -y && sudo apt-get clean -y \
+    && sudo rm -rf /var/lib/apt/lists/*
 
 
 WORKDIR /home/vscode
@@ -43,9 +45,9 @@ RUN git clone https://github.com/sigrokproject/libsigrok.git && \
     ./autogen.sh && \
     ./configure && \
     make && \
-    make install && \
+    sudo make install && \
     sudo ldconfig /usr/local/lib
-ENV PKG_CONFIG_PATH=/root/sr/lib/pkgconfig
+ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 
 
 WORKDIR /home/vscode
@@ -55,14 +57,14 @@ RUN git clone https://github.com/sigrokproject/sigrok-cli.git && \
     ./autogen.sh && \
     ./configure && \
     make && \
-    make install
+    sudo make install
 
 
 WORKDIR /home/vscode
 # Setup sigrok-dumps
 RUN git clone https://github.com/sigrokproject/sigrok-dumps.git && \
     cd sigrok-dumps && \
-    make install
+    sudo make install
 
 
 WORKDIR /home/vscode
@@ -70,7 +72,7 @@ WORKDIR /home/vscode
 RUN git clone https://github.com/sigrokproject/sigrok-util.git && \
     cd sigrok-util/cross-compile/linux && \
     ./sigrok-cross-linux || true
-ENV LD_LIBRARY_PATH=/root/sr/lib
+ENV LD_LIBRARY_PATH=/usr/local/lib/
 
 
 WORKDIR /home/vscode
@@ -80,7 +82,7 @@ RUN git clone https://github.com/sigrokproject/libsigrokdecode.git && \
     ./autogen.sh && \
     ./configure && \
     make && \
-    make install
+    sudo make install
 ENV PATH_DECODERS=/home/vscode//libsigrokdecode/decoders/
 
 

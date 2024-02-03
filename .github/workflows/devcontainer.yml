@@ -24,7 +24,7 @@ jobs:
     - name: Run test script
       run: |
         cd .devcontainer
-        ./test.sh
+        ./smoke_test.sh
 
     - name: Run tests
       run: |
