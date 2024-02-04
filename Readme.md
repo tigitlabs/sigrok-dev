@@ -49,4 +49,5 @@ Get test data
 ```bash
 wget https://michael.stapelberg.ch/2020-09-27-rohdaten-klingel-rev2.zip -O /tmp/klingel.zip && \
 unzip /tmp/klingel.zip -d .
+sigrok-cli -i 2020-09-27-rohdaten-klingel/2020-09-27-anlern-01-open-PUR-filtered.srzip  --channels BUS
 ```
