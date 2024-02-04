@@ -51,16 +51,6 @@ ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 
 
 WORKDIR /home/vscode
-# # Setup sigrok-cli
-RUN git clone https://github.com/sigrokproject/sigrok-cli.git && \
-    cd sigrok-cli && \
-    ./autogen.sh && \
-    ./configure && \
-    make && \
-    sudo make install
-
-
-WORKDIR /home/vscode
 # Setup sigrok-dumps
 RUN git clone https://github.com/sigrokproject/sigrok-dumps.git && \
     cd sigrok-dumps && \
@@ -93,3 +83,13 @@ RUN git clone https://github.com/sigrokproject/sigrok-test.git && \
     ./autogen.sh && \
     ./configure --with-decodersdir=$PATH_DECODERS && \
     make
+
+
+WORKDIR /home/vscode
+# # Setup sigrok-cli
+RUN git clone https://github.com/sigrokproject/sigrok-cli.git && \
+    cd sigrok-cli && \
+    ./autogen.sh && \
+    ./configure && \
+    make && \
+    sudo make install
