@@ -1,0 +1,51 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// Base Image README at: https://github.com/devcontainers/templates/tree/main/src/docker-in-docker
+{
+  "name": "rts-dev-con",
+  "build": {
+    "dockerfile": "./Dockerfile",
+    "context": "."
+  },
+  "initializeCommand": "echo 'Initializing Dev Container...'",
+  "postCreateCommand": "echo 'Post Create Command...'",
+  "postStartCommand": "echo 'Post Start Command...'",
+  "onCreateCommand": "echo 'On Create Command...'",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": "false",
+      "username": "vscode",
+      "userUid": "1000",
+      "userGid": "1000",
+      "upgradePackages": "true"
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {
+      "installDirectlyFromGitHubRelease": true,
+      "version": "latest"
+    },
+    "ghcr.io/devcontainers-contrib/features/actionlint:1": {
+      "version": "latest"
+    },
+    // This is needed to install the devconainer-cli
+    "ghcr.io/devcontainers/features/node:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "github.vscode-github-actions",
+        "github.vscode-pull-request-github",
+        "gitHub.copilot",
+        "gitHub.copilot-chat",
+        "mutantdino.resourcemonitor",
+        "DavidAnson.vscode-markdownlint",
+        "streetsidesoftware.code-spell-checker",
+        "ms-python.python",
+        "mechatroner.rainbow-csv",
+        "ms-python.black-formatter",
+        "GrapeCity.gc-excelviewer",
+        "mhutchie.git-graph"
+      ]
+    }
+  },
+  "remoteUser": "vscode",
+  "updateRemoteUserUID": true
+}
