@@ -51,3 +51,22 @@ wget https://michael.stapelberg.ch/2020-09-27-rohdaten-klingel-rev2.zip -O /tmp/
 unzip /tmp/klingel.zip -d .
 sigrok-cli -i 2020-09-27-rohdaten-klingel/2020-09-27-anlern-01-open-PUR-filtered.srzip  --channels BUS
 ```
+
+### Test tool pdtest
+
+Tests are defined in test.conf files
+This is an example of a test.conf file where the modbus is stacked on top of the uart protocol decoder.
+
+test flowmeter_target_15liter_per_min
+ protocol-decoder uart channel rx=2 option baudrate=9600
+ protocol-decoder modbus option scchannel=RX option cschannel=RX
+ stack uart modbus
+ input uart/modbus_rtu/flowmeter/flowmeter_target_15liter_per_min.sr
+ output modbus annotation match flowmeter_target_15liter_per_min.output
+
+To run this with sigrok-cli
+
+```bash
+sigrok-cli --input-file ~/sigrok-dumps/uart/modbus_rtu/flowmeter/flowmeter_target_15liter_per_min.sr --protocol-decoders uart:rx=RXTX:baudrate=9600,modbus:scchannel=RX:cschannel=RX
+sigrok-cli --input-file ~/sigrok-dumps/uart/modbus_rtu/flowmeter/flowmeter_target_15liter_per_min.sr --protocol-decoders uart:rx=RXTX:baudrate=9600,modbus:scchannel=RX:cschannel=RX --protocol-decoder-annotations modbus
+```
